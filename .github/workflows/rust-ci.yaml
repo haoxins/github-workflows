@@ -10,6 +10,8 @@ env:
 jobs:
   CI:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/haoxins/ubuntu:main
     steps:
     - uses: actions/checkout@v3
     - name: Clippy
