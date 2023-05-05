@@ -16,6 +16,7 @@ jobs:
       with:
         toolchain: nightly
         override: true
+        components: clippy, rustfmt
     - run: cargo clippy --no-deps --all-targets --all-features
     - run: cargo test
     - run: cargo build --release
