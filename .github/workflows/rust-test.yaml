@@ -8,7 +8,7 @@ env:
   RUSTFLAGS: "-Dwarnings"
 
 jobs:
-  Clippy:
+  test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -17,21 +17,5 @@ jobs:
         toolchain: nightly
         override: true
     - run: cargo clippy --no-deps --all-targets --all-features
-  Test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - uses: actions-rs/toolchain@v1
-      with:
-        toolchain: nightly
-        override: true
     - run: cargo test
-  Build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - uses: actions-rs/toolchain@v1
-      with:
-        toolchain: nightly
-        override: true
     - run: cargo build --release
