@@ -1,4 +1,4 @@
-name: Rust CI
+name: Rust
 
 on:
   workflow_call:
@@ -8,15 +8,30 @@ env:
   RUSTFLAGS: "-Dwarnings"
 
 jobs:
-  CI:
+  Clippy:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/haoxins/ubuntu:main
     steps:
     - uses: actions/checkout@v3
-    - name: Clippy
-      run: cargo clippy --no-deps --all-targets --all-features
-    - name: Test
-      run: cargo test
-    - name: Build
-      run: cargo build --release
+    - uses: actions-rs/toolchain@v1
+      with:
+        toolchain: nightly
+        override: true
+    - run: cargo clippy --no-deps --all-targets --all-features
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions-rs/toolchain@v1
+      with:
+        toolchain: nightly
+        override: true
+    - run: cargo test
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions-rs/toolchain@v1
+      with:
+        toolchain: nightly
+        override: true
+    - run: cargo build --release
