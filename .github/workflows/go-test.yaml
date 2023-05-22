@@ -1,4 +1,4 @@
-name: Golang Unit Testing
+name: Golang Testing
 
 on:
   workflow_call:
@@ -26,4 +26,4 @@ jobs:
       with:
         fetch-depth: 0
     - name: Test
-      run: go test ./... -v -race -coverprofile cover.out
+      run: go test ./... -v -cover -race
