@@ -3,24 +3,17 @@ name: Rust
 on:
   workflow_call:
 
-env:
-  CARGO_TERM_COLOR: always
+permissions:
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions-rs/toolchain@v1
-      with:
-        toolchain: nightly
-        override: true
-        components: clippy, rustfmt
-    - name: Install dependencies
-      run: |
-        sudo apt update
-        sudo apt install -y protobuf-compiler libssl-dev
+    - uses: actions/checkout@v4
+    - run: rustup toolchain install stable --profile minimal
+    - uses: Swatinem/rust-cache@v2
     - run: cargo fmt --check
     - run: cargo clippy --all-features --all-targets --no-deps
     - run: cargo test
